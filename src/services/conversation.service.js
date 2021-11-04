@@ -40,7 +40,10 @@ class ConversationService {
                     id
                 }
             })
-            return result
+            if (result[0] === 0) {
+                return false
+            }
+            return true
         } catch (error) {
             throw error
         }
