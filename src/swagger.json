@@ -1,3 +1,113 @@
 {
-    
+    "openapi": "3.0.0",
+    "info": {
+        "title": "WhatsUp",
+        "version": "1.0.0",
+        "description": "This is a simple instant messaging server based on nodeJS."
+    },
+    "servers": [
+        {
+            "url": "http://localhost:9000/api/v1",
+            "description": "Development Server"
+        }
+    ],
+    "paths": {
+        "/users":{
+            "get":{
+                "tags": ["users"],
+                "description": "Get system users.",
+                "responses":{
+                    "200":{
+                        "description": "Get a list of all users"
+                    }
+                }
+            },
+            "post":{
+                "tags": ["users"],
+                "description": "Add a user to the system.",
+                "responses": {
+                    "201":{
+                        "description": "A user has been created successfully"
+                    }
+                },
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/user"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}":{
+            "put":{
+                "tags": ["users"],
+                "description": "Update a user to the system.",
+                "responses": {
+                    "200":{
+                        "description": "A user has been updated successfully"
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "User id",
+                        "schema":{
+                            "type": "number"
+                        }
+                    }
+                ],
+                "requestBody":{
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/user"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "user":{
+                "type": "object",
+                "required": [
+                    "firstname", 
+                    "lastname", 
+                    "email",
+                    "password"
+                ],
+                "properties":{
+                    "firstname":{
+                        "type":"string"
+                    },
+                    "lastname":{
+                        "type": "string"
+                    },
+                    "email":{
+                        "type": "string"
+                    },
+                    "password":{
+                        "type": "string",
+                        "description": "Minimum length of 8 characters."
+                    },
+                    "profile_image":{
+                        "type": "string",
+                        "example":"https://i.stack.imgur.com/h1SaI.png"
+
+                    },
+                    "phone":{
+                        "type": "string",
+                        "format": "+###(###)#######"
+                    }
+                }
+            }
+        }
+    }
 }
